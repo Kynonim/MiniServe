@@ -6,7 +6,7 @@ use argon2::password_hash::{SaltString, PasswordHash, Error as KesalahanHash};
 use argon2::{PasswordHasher, Argon2, PasswordVerifier};
 use chrono::{DateTime, Duration, Utc};
 
-pub fn buat_token_jwt(id: i32) -> Result<String, KesalahanJWT> {
+pub fn buat_token_jwt(id: i64) -> Result<String, KesalahanJWT> {
   let rahasia: String = dotenv::var("JWT_KEY").expect("JWT_KEY harus ada di .env");
   let kadaluarsa: DateTime<Utc> = Utc::now() + Duration::seconds(dotenv::var("JWT_DURASI").unwrap().parse::<i64>().unwrap());
 
