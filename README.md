@@ -42,8 +42,8 @@ MiniServe adalah sebuah API server yang dibangun menggunakan Rust dengan framewo
 
 1. **Clone Repositori**:
    ```bash
-   git clone https://github.com/username/miniserve.git
-   cd miniserve
+   git clone https://github.com/Kynonim/MiniServe.git
+   cd MiniServe
    ```
 
 2. **Setup Environment**:
@@ -64,7 +64,7 @@ MiniServe adalah sebuah API server yang dibangun menggunakan Rust dengan framewo
    ```bash
    cargo run
    ```
-   Server akan berjalan di `http://127.0.0.1:8080`.
+   Server akan berjalan di `http://127.0.0.1:2025`.
 
 ---
 
