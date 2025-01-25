@@ -67,6 +67,10 @@ pub async fn login_users(user: web::Json<LoginUser>, koneksi: web::Data<SqlitePo
 }
 
 pub async fn update_users(id: web::Path<i64>, user: web::Json<Users>, koneksi: web::Data<SqlitePool>) -> impl Responder {
+  let uid: i64 = id.into_inner();
+  if uid != user.id {
+    return HttpResponse::BadRequest().json(serde_json::json!({"status": false, "message": "ID tidak valid"}));
+  }
   let hashing: String = match hash_password(&user.sandi) {
     Ok(hashed) => hashed,
     Err(_) => return HttpResponse::InternalServerError().json(serde_json::json!({"status": false, "message": "Gagal menghash password"})),
@@ -75,27 +79,26 @@ pub async fn update_users(id: web::Path<i64>, user: web::Json<Users>, koneksi: w
     .bind(&user.nama)
     .bind(&user.email)
     .bind(hashing)
-    .bind(id.into_inner())
+    .bind(uid)
     .execute(koneksi.get_ref())
     .await;
   match result {
-    Ok(_) => HttpResponse::Ok().json(user.into_inner()),
+    Ok(_) => HttpResponse::Ok().json(serde_json::json!({"status": true, "message": "Berhasil memperbarui user"})),
     Err(_) => HttpResponse::InternalServerError().json(serde_json::json!({"status": false, "message": "Gagal memperbarui user"})),
   }
 }
 
 pub async fn hapus_users(id: web::Path<i64>, user: web::Json<Users>, koneksi: web::Data<SqlitePool>) -> impl Responder {
-  let id_value: i64 = id.into_inner();
-  let userid: i64 = user.id;
-  if id_value != userid {
+  let uid: i64 = id.into_inner();
+  if uid != user.id {
     return HttpResponse::BadRequest().json(serde_json::json!({"status": false, "message": "Tidak dapat menghapus orang lain"}));
   }
   let result: Result<sqlx::sqlite::SqliteQueryResult, sqlx::Error> = sqlx::query("delete from users where id = ?")
-    .bind(id_value)
+    .bind(uid)
     .execute(koneksi.get_ref())
     .await;
   match result {
-    Ok(_) => HttpResponse::Ok().json(serde_json::json!({"status": true, "message": format!("User dengan id {} berhasil dihapus", id_value)})),
+    Ok(_) => HttpResponse::Ok().json(serde_json::json!({"status": true, "message": format!("User dengan email {} berhasil dihapus", &user.email)})),
     Err(_) => HttpResponse::InternalServerError().json(serde_json::json!({"status": false, "message": "Gagal menghapus user"})),
   }
 }

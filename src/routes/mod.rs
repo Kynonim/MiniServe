@@ -18,8 +18,8 @@ pub fn konfigurasi(config: &mut web::ServiceConfig) {
         web::scope("/private")
           .wrap(auth_middleware)
           .route("/users", web::get().to(get_users))
-          .route("/users", web::put().to(update_users))
-          .route("/users", web::delete().to(hapus_users))
+          .route("/users/{id}", web::put().to(update_users))
+          .route("/users/{id}", web::delete().to(hapus_users))
       )
   );
 }
