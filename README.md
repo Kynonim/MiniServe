@@ -141,7 +141,7 @@ Authorization: Bearer <JWT Token>
 
 ### Registrasi Pengguna
 ```bash
-curl -X POST http://localhost:8080/api/public/signup \
+curl -X POST http://localhost:2025/api/public/signup \
 -H "Content-Type: application/json" \
 -d '{
   "nama": "Riky Ripaldo",
@@ -152,7 +152,7 @@ curl -X POST http://localhost:8080/api/public/signup \
 
 ### Login Pengguna
 ```bash
-curl -X POST http://localhost:8080/api/public/signin \
+curl -X POST http://localhost:2025/api/public/signin \
 -H "Content-Type: application/json" \
 -d '{
   "email": "riky@imphnen.scroll",
@@ -162,7 +162,7 @@ curl -X POST http://localhost:8080/api/public/signin \
 
 ### Baca Daftar Pengguna
 ```bash
-curl -X GET http://localhost:8080/api/private/users \
+curl -X GET http://localhost:2025/api/private/users \
 -H "Authorization: Bearer <JWT Token>"
 ```
 
