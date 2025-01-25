@@ -1,0 +1,20 @@
+[package]
+name = "miniserve"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+sqlx = { version = "0.8.3", features = ["sqlite", "runtime-tokio"] }
+actix-web = "4.9.0"
+env_logger = "0.11.6"
+futures = "0.3.31"
+jsonwebtoken = "9.3.0"
+chrono = "0.4.39"
+argon2 = "0.5.3"
+dotenv = "0.15.0"
+actix-cors = "0.7.0"
+actix-web-httpauth = "0.8.2"
+serde_json = "1.0.137"
+rand = "0.8.5"
