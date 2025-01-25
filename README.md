@@ -5,7 +5,7 @@
 ```bash
 JWT_KEY = "secret_key"
 JWT_DURASI = 10000 # 10000 detik = 10000/60 = 166.66666666666667 menit
-DATAABASE_URL = "imphnen.db"
+DATABASE_URL = "imphnen.db"
 ```
 
 # API
@@ -31,10 +31,12 @@ DATAABASE_URL = "imphnen.db"
 ### Read Users
 * GET /api/private/users
 > JWT Token Needed
+> Authorization: Bearer <JWT Token>
 
 ### Update Account
 * PUT /api/private/users/:id
 > JWT Token Needed
+> Authorization: Bearer <JWT Token>
 ```json
 {
   "nama": "Riky Ripaldo",
@@ -46,6 +48,7 @@ DATAABASE_URL = "imphnen.db"
 ### Create Account
 * DELETE /api/private/users/:id
 > JWT Token Needed
+> Authorization: Bearer <JWT Token>
 ```json
 {
   "nama": "Riky Ripaldo",

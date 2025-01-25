@@ -1,5 +1,5 @@
 use actix_web::{web, HttpResponse, Responder};
-use crate::models::{CreateUser, Users};
+use crate::models::{CreateUser, LoginUser, Users};
 use crate::routes::verify::{buat_token_jwt, hash_password, verify_password};
 use sqlx::{Row, SqlitePool};
 
@@ -14,7 +14,8 @@ pub async fn get_users(koneksi: web::Data<SqlitePool>) -> impl Responder {
   }
 }
 
-pub async fn buat_users(koneksi: web::Data<SqlitePool>, user: web::Json<CreateUser>) -> impl Responder {
+pub async fn buat_users(user: web::Json<CreateUser>, koneksi: web::Data<SqlitePool>) -> impl Responder {
+  println!("{}", user.email);
   let cek_user = sqlx::query("select count (*) from users where email = ?")
     .bind(&user.email)
     .fetch_one(koneksi.get_ref())
@@ -40,12 +41,12 @@ pub async fn buat_users(koneksi: web::Data<SqlitePool>, user: web::Json<CreateUs
     .execute(koneksi.get_ref())
     .await;
   match result {
-    Ok(_) => HttpResponse::Created().json(user.into_inner()),
+    Ok(_) => HttpResponse::Created().json(serde_json::json!({"status": true, "message": "Berhasil membuat akun"})),
     Err(_) => HttpResponse::InternalServerError().json(serde_json::json!({"status": false, "message": "Gagal membuat user"})),
   }
 }
 
-pub async fn login_users(user: web::Json<CreateUser>, koneksi: web::Data<SqlitePool>) -> impl Responder {
+pub async fn login_users(user: web::Json<LoginUser>, koneksi: web::Data<SqlitePool>) -> impl Responder {
   let result: Result<Option<Users>, sqlx::Error> = sqlx::query_as::<_, Users>("select * from users where email = ?")
     .bind(&user.email)
     .fetch_optional(koneksi.get_ref())

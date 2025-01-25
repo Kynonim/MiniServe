@@ -25,5 +25,5 @@ pub struct LoginUser {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct JWTExpire {
   pub id: String,
-  pub time: i64,
+  pub exp: i64,
 }

@@ -14,8 +14,8 @@ pub async fn validasi_auth(req: ServiceRequest, res: BearerAuth) -> Result<Servi
     Err(e) => {
       let kind: &KesalahanJWTK = e.kind();
       let error = match *kind {
-        KesalahanJWTK::ExpiredSignature => KesalahanActixWebUnauthorized("Token kadaluarsa".to_string()),
-        _ => KesalahanActixWebUnauthorized("Token tidak valid".to_string()),
+        KesalahanJWTK::ExpiredSignature => KesalahanActixWebUnauthorized(serde_json::json!({"status": false, "message": "Token kadaluarsa"})),
+        _ => KesalahanActixWebUnauthorized(serde_json::json!({"status": false, "message": "Token tidak valid"})),
       };
       Err((error, req))
     }

@@ -12,7 +12,7 @@ pub fn buat_token_jwt(id: i64) -> Result<String, KesalahanJWT> {
 
   let jwtexp: JWTExpire = JWTExpire {
     id: id.to_string(),
-    time: kadaluarsa.timestamp() as i64,
+    exp: kadaluarsa.timestamp() as i64,
   };
 
   encode(&Header::default(), &jwtexp, &EncodingKey::from_secret(rahasia.as_bytes()))

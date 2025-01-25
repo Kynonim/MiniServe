@@ -15,8 +15,8 @@ async fn main() -> std::io::Result<()> {
     dotenv().ok();
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
-    let koneksi: Pool<Sqlite> = koneksi_ke_database().await.expect("Tidak dapat terhubung ke database");
-
+    let koneksi: Pool<Sqlite> = koneksi_ke_database().await.expect("Gagal membuat koneksi ke database");
+    
     HttpServer::new(move || {
         App::new()
           .app_data(web::Data::new(koneksi.clone()))
